@@ -4,8 +4,13 @@
       <CHeaderToggler class="ps-1" @click="$store.commit('toggleSidebar')">
         <CIcon icon="cil-menu" size="lg" />
       </CHeaderToggler>
-      <CHeaderBrand class="mx-auto d-lg-none" to="/">
-        <CIcon :icon="logo" height="48" alt="Logo" />
+      <CHeaderBrand class="ml-2 d-lg-none" to="/">
+        <img
+          custom-class-name="sidebar-brand-narrow"
+          src="@/assets/images/logo-letras-negras.png"
+          :width="200"
+          :height="75"
+        />
       </CHeaderBrand>
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>

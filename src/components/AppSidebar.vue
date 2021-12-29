@@ -12,15 +12,11 @@
     "
   >
     <CSidebarBrand>
-      <CIcon
+      <img
         custom-class-name="sidebar-brand-full"
-        :icon="logoNegative"
-        :height="35"
-      />
-      <CIcon
-        custom-class-name="sidebar-brand-narrow"
-        :icon="sygnet"
-        :height="35"
+        src="@/assets/images/logo-letras-blancas.png"
+        :width="200"
+        :height="75"
       />
     </CSidebarBrand>
     <AppSidebarNav />
