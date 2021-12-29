@@ -1,13 +1,28 @@
 export default [
   {
     component: 'CNavItem',
-    name: 'Dashboard',
+    name: 'Inicio',
     to: '/dashboard',
-    icon: 'cil-speedometer',
+    icon: 'cil-cursor',
     badge: {
       color: 'primary',
-      text: 'NEW',
     },
+  },
+  {
+    component: 'CNavTitle',
+    name: 'Links de interés',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Experiencia laboral',
+    to: '/theme/colors',
+    icon: 'cil-notes',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Sobre mí',
+    to: '/theme/typography',
+    icon: 'cil-pencil',
   },
   {
     component: 'CNavTitle',
