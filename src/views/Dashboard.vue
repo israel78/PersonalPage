@@ -3,7 +3,7 @@
     <CRow>
       <CCol :md="12">
         <CCard>
-          <CCardHeader>Interesante</CCardHeader>
+          <CCardHeader>En una frase..</CCardHeader>
           <CCardBody>
             <blockquote class="blockquote mb-0">
               <p>

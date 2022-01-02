@@ -10,12 +10,12 @@ export default [
   },
   {
     component: 'CNavTitle',
-    name: 'Links de interés',
+    name: 'ir a:',
   },
   {
     component: 'CNavItem',
     name: 'Experiencia laboral',
-    to: '/theme/colors',
+    to: '/goto/experience',
     icon: 'cil-notes',
   },
   {
