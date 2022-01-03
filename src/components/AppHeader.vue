@@ -17,7 +17,7 @@
           <CNavLink href="#">Sobre esta web</CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Contacto</CNavLink>
+          <CNavLink href="#/headerpages/contact">Contacto</CNavLink>
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav>

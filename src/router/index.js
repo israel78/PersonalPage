@@ -38,6 +38,11 @@ const routes = [
         name: 'Curriculum',
         component: () => import('@/views/goto/Cv.vue'),
       },
+      {
+        path: '/headerpages/contact',
+        name: 'Contacto',
+        component: () => import('@/views/headerpages/Contact.vue'),
+      },
     ],
   },
 ]
