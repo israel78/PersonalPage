@@ -115,4 +115,7 @@ export const getters = {
   getErrors: (state) => {
     return state.error
   },
+  getCaptcha: (state) => {
+    return state.captcha
+  },
 }

@@ -34,7 +34,7 @@
                   </CInputGroup>
                   <div class="mb-3">
                     <CFormLabel for="captchaInput"
-                      >Captcha : {{ captchaGetting }}</CFormLabel
+                      >Captcha : {{ showCaptcha }}</CFormLabel
                     >
                     <CFormInput id="captchaInput" v-model="user.captchaInput" />
                   </div>
@@ -77,7 +77,7 @@ export default {
       passWord: null,
       captchaInput: '',
     },
-    captchaGetting: localStorage.getItem('captcha'),
+    captchaGetting: '',
     errorIn: '',
   }),
   methods: {
@@ -110,6 +110,12 @@ export default {
       'acierto',
       'error',
     ]),
+    showCaptcha: {
+      cached: false,
+      get() {
+        return this.$store.getters.getCaptcha
+      },
+    },
     showError: {
       cached: false,
       get() {

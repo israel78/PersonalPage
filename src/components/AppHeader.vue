@@ -21,7 +21,25 @@
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav>
-        <AppHeaderDropdownAccnt />
+        <CButton
+          v-if="admin == null"
+          class="me-2"
+          color="dark"
+          component="a"
+          @click="toggleAdminMode"
+          variant="ghost"
+          >Modo edición contenido</CButton
+        >
+        <CButton
+          v-if="admin != null"
+          class="me-2"
+          color="dark"
+          component="a"
+          @click="toggleAdminMode"
+          variant="ghost"
+          >Salir de modo edición contenido</CButton
+        >
+        <AppHeaderDropdownAccnt v-show="window.outerWidth > 600" />
       </CHeaderNav>
     </CContainer>
     <CHeaderDivider />
@@ -35,6 +53,7 @@
 import AppBreadcrumb from './AppBreadcrumb'
 import AppHeaderDropdownAccnt from './AppHeaderDropdownAccnt'
 import { logo } from '@/assets/brand/logo'
+import router from '@/router'
 export default {
   name: 'AppHeader',
   components: {
@@ -42,8 +61,19 @@ export default {
     AppHeaderDropdownAccnt,
   },
   setup() {
+    const admin = localStorage.getItem('admin')
+    const toggleAdminMode = function () {
+      if (localStorage.getItem('admin') != null) {
+        localStorage.removeItem('admin')
+        router.go(0)
+      } else {
+        router.push({ path: '/login' })
+      }
+    }
     return {
       logo,
+      toggleAdminMode,
+      admin,
     }
   },
 }
