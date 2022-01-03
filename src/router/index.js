@@ -4,6 +4,11 @@ import DefaultLayout from '@/layouts/DefaultLayout'
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/pages/Login.vue'),
+  },
+  {
     path: '/',
     name: 'Home',
     component: DefaultLayout,
