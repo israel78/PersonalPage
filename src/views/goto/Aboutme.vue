@@ -52,7 +52,12 @@
       <h4 style="float: left"><CIcon :icon="icon.cilBrowser" /> Formación</h4>
     </CCardHeader>
   </CCard>
-  <CRow class="row row-cols-2">
+  <CRow
+    :class="{
+      'row row-cols-1': window.outerWidth < 600,
+      'row row-cols-2': window.outerWidth > 600,
+    }"
+  >
     <CCol>
       <!-- una caja por experiencia-->
       <CCard>

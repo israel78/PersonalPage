@@ -48,6 +48,11 @@ const routes = [
         name: 'Contacto',
         component: () => import('@/views/headerpages/Contact.vue'),
       },
+      {
+        path: '/headerpages/aboutthisweb',
+        name: 'Sobre-esta-web',
+        component: () => import('@/views/headerpages/AboutThisWeb.vue'),
+      },
     ],
   },
 ]

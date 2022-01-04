@@ -25,7 +25,6 @@
 
 <script>
 import pdf from 'vue3-pdf'
-var loadingTask = pdf.createLoadingTask('CurriculoIsraelMoreno150421.pdf')
 
 export default {
   components: {
@@ -33,11 +32,11 @@ export default {
   },
   data() {
     return {
-      src: loadingTask,
+      src: pdf.createLoadingTask('CurriculoIsraelMoreno150421.pdf'),
       numPages: undefined,
     }
   },
-  mounted() {
+  created() {
     this.src.promise.then((pdf) => {
       this.numPages = pdf.numPages
     })

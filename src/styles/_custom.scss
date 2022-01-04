@@ -1,1 +1,11 @@
 // Here you can add other styles
+//Se sobreescribe el estilo para que en mobiles al clicar en el menu no se quedeoscurecida la pantalla.
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  z-index: 0 !important;
+  width: 100vw;
+  height: 100vh;
+  background-color: white !important;
+  transition: opacity 0.15s linear;
+}

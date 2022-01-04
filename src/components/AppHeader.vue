@@ -14,7 +14,7 @@
       </CHeaderBrand>
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>
-          <CNavLink href="#">Sobre esta web</CNavLink>
+          <CNavLink href="#/headerpages/aboutthisweb">Sobre esta web</CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#/headerpages/contact">Contacto</CNavLink>

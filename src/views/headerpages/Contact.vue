@@ -1,25 +1,31 @@
 <template>
   <CCard>
     <CCardHeader>
-      <h4 style="float: left">Curriculum vitae</h4>
-      <h4 style="float: right">
-        <a href="CurriculoIsraelMoreno150421.pdf"
-          ><CButton color="dark">Descargar</CButton></a
-        >
-      </h4>
+      <h4 style="float: left">Formulario de contacto</h4>
     </CCardHeader>
     <CCardBody>
-      <pdf src="CurriculoIsraelMoreno150421.pdf"></pdf>
+      <CForm>
+        <div class="mb-3">
+          <CFormLabel for="mail">Mail</CFormLabel>
+          <CFormInput required="true" type="email" id="mail" placeholder="" />
+        </div>
+        <div class="mb-3">
+          <CFormLabel for="asunto">Asunto</CFormLabel>
+          <CFormInput type="text" required="true" id="asunto" placeholder="" />
+        </div>
+        <div class="mb-3">
+          <CFormLabel for="mensaje">Mensaje</CFormLabel>
+          <CFormTextarea id="mensaje" rows="3"></CFormTextarea>
+        </div>
+        <div class="col-auto">
+          <CButton type="submit" color="dark" class="mb-3">Enviar</CButton>
+        </div>
+      </CForm>
     </CCardBody>
   </CCard>
 </template>
-
 <script>
-import pdf from 'vue3-pdf'
-
 export default {
-  components: {
-    pdf,
-  },
+  components: {},
 }
 </script>
