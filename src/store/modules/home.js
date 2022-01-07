@@ -28,8 +28,8 @@ export const mutations = {
   setAciertoMsg(state, aciertoMsg) {
     state.aciertoMsg = aciertoMsg
   },
-  setError(state, error) {
-    state.error = error
+  setErrorMsg(state, error) {
+    state.errorMsg = error
   },
   setGraphicValue(state, graphicValue) {
     state.graphicValue = graphicValue
@@ -65,16 +65,25 @@ export const actions = {
       })
       // eslint-disable-next-line no-unused-vars
       .then((response) => {
-        commit('setAciertoMsg', 'Enhorabuena has conseguido logarte')
-        commit('setError', '')
+        commit('setAciertoMsg', response.data.value)
+        commit('setErrorMsg', '')
         commit('setPhrase', phrase)
       })
       .catch((error) => {
         if (error.response) {
           commit('setAciertoMsg', '')
-          commit('setError', error.response.data.value)
+          commit('setErrorMsg', error.response.data.value)
+        } else {
+          commit('setAciertoMsg', '')
+          commit('setErrorMsg', 'Error de comunicación con el servidor')
         }
       })
+  },
+  setAciertoMsgToEmpty({ commit }) {
+    commit('setAciertoMsg', '')
+  },
+  setErrorMsgToEmpty({ commit }) {
+    commit('setErrorMsg', '')
   },
 }
 export const getters = {

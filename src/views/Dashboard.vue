@@ -1,4 +1,5 @@
 <template>
+  <Toast :title="title" :body="body" :bodyOk="bodyOk" />
   <div>
     <CRow>
       <CCol :md="12">
@@ -113,18 +114,21 @@
 
 <script>
 import MainChartExample from './charts/MainChartExample'
-
+import Toast from '@/components/Toast'
 import { useStore } from 'vuex'
 import { computed, onBeforeMount } from 'vue'
+
 export default {
   name: 'Dashboard',
   components: {
     MainChartExample,
+    Toast,
   },
 
   setup() {
     const store = useStore()
     let newPhrase = ''
+    let trigger = 0
     function processPhraseFormMethod() {
       store.dispatch('processPhraseForm', newPhrase)
     }
@@ -145,16 +149,23 @@ export default {
         newPhrase = val
       },
     })
-
+    const title = 'Aviso'
+    // control datos respuesta toast
+    const body = computed(() => store.getters.getErrorMsg)
+    const bodyOk = computed(() => store.getters.getAciertoMsg)
+    //Fin
+    //datos para grafica
     const graphicDataList = computed(() => store.getters.getGraphicValueList)
     const graphicDataPrincipalData = computed(
       () => store.getters.getGraphicPrincipalData,
     )
-
+    //fin
+    // si no hay datos de la gráfica recargamos el componente
     const reload = computed(() => {
       if (store.getters.getGraphicValueList.length == 0) return 1
       else return 0
     })
+    //fin
     let date = new Date()
     const thisYear = date.getFullYear()
 
@@ -167,6 +178,10 @@ export default {
       admin,
       processPhraseFormMethod,
       newPhrase,
+      trigger,
+      body,
+      bodyOk,
+      title,
     }
   },
 }

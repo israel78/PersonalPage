@@ -29,7 +29,6 @@ export default {
   },
   setup(props) {
     let labelIn = props.graphicDataList.map((element) => element.xvalue)
-
     let dataLineOne = props.graphicDataList.map((element) => element.yvalue1)
     let dataLineTwo = props.graphicDataList.map((element) => element.yvalue2)
     let dataLineTree = props.graphicDataList.map((element) => element.yvalue3)
