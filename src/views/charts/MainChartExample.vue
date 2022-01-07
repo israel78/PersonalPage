@@ -1,7 +1,7 @@
 <template>
-  <CChart
+  <c-chart
     type="line"
-    :data="data"
+    v-bind:data="data"
     :options="options"
     @get-dataset-at-event="aa"
     @get-element-at-event="aa"
@@ -12,67 +12,65 @@
 <script>
 import { CChart } from '@coreui/vue-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils/src'
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
+import { watch } from 'vue'
 export default {
   name: 'MainChartExample',
   components: {
     CChart,
   },
-  setup() {
-    const data = {
-      labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021'],
+
+  props: {
+    graphicDataList: {
+      type: Array,
+    },
+    graphicDataPrincipalData: {
+      type: Object,
+    },
+  },
+  setup(props) {
+    let labelIn = props.graphicDataList.map((element) => element.xvalue)
+
+    let dataLineOne = props.graphicDataList.map((element) => element.yvalue1)
+    let dataLineTwo = props.graphicDataList.map((element) => element.yvalue2)
+    let dataLineTree = props.graphicDataList.map((element) => element.yvalue3)
+
+    let data = {
+      labels: labelIn,
       datasets: [
         {
-          label: 'back',
+          label: props.graphicDataPrincipalData.lineGraphicNameOne,
           backgroundColor: hexToRgba(getStyle('--cui-info'), 10),
           borderColor: getStyle('--cui-info'),
           pointHoverBackgroundColor: getStyle('--cui-info'),
           borderWidth: 2,
-          data: [
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-          ],
+          data: dataLineOne,
           fill: true,
         },
         {
-          label: 'front',
+          label: props.graphicDataPrincipalData.lineGraphicNameTwo,
           backgroundColor: 'transparent',
           borderColor: getStyle('--cui-success'),
           pointHoverBackgroundColor: getStyle('--cui-success'),
           borderWidth: 2,
-          data: [
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-            random(0, 100),
-          ],
+          data: dataLineTwo,
         },
         {
-          label: 'Otras funciones',
+          label: props.graphicDataPrincipalData.lineGraphicNameTree,
           backgroundColor: 'transparent',
           borderColor: getStyle('--cui-danger'),
           pointHoverBackgroundColor: getStyle('--cui-danger'),
           borderWidth: 1,
           borderDash: [8, 5],
-          data: [65, 65, 65, 65, 65, 65, 65],
+          data: dataLineTree,
         },
       ],
     }
-
+    console.log(props.graphicDataList + 'valueprops')
+    watch(props.graphicDataList, (currentValue, oldValue) => {
+      console.log(currentValue)
+      console.log(oldValue)
+      if (currentValue.length == 0) this.$forceUpdate()
+    })
     const options = {
       maintainAspectRatio: false,
       plugins: {

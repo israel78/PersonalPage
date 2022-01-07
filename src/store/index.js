@@ -1,5 +1,7 @@
 import { createStore } from 'vuex'
 import * as login from '@/store/modules/login.js'
+import * as home from '@/store/modules/home.js'
+
 export default createStore({
   state: {
     sidebarVisible: '',
@@ -19,5 +21,6 @@ export default createStore({
   actions: {},
   modules: {
     firstModule: login,
+    secondModule: home,
   },
 })

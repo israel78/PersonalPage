@@ -6,8 +6,8 @@ axios.defaults.headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
 }
-axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/captcha'
-//axios.defaults.baseURL='http://localhost:8082/api/captcha'
+//axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/captcha'
+axios.defaults.baseURL = 'http://localhost:8082'
 export const state = {
   username: '',
   password: '',
@@ -56,7 +56,7 @@ export const actions = {
   getCaptcha({ commit }) {
     if (localStorage.getItem('captcha') == null) {
       axios
-        .get('/app/getcaptcha')
+        .get('/api/captcha/app/getcaptcha')
         .then((response) => {
           commit('setCaptcha', response.data.key)
           commit('setMaxAttemps', response.data.value)
@@ -69,7 +69,7 @@ export const actions = {
   // eslint-disable-next-line no-unused-vars
   setSettings({ commit }, settings) {
     axios
-      .post('/config/setsettings', {
+      .post('/api/captcha/config/setsettings', {
         id: settings.id,
         alfa: settings.alfa,
         attemps: settings.attemps,
@@ -83,7 +83,7 @@ export const actions = {
     console.log('entro')
     if (user.captchaInput == localStorage.getItem('captcha')) {
       axios
-        .post('/app/loginwithoutsession', {
+        .post('/api/captcha/app/loginwithoutsession', {
           firstName: user.name,
           passw: user.passWord,
         })
@@ -94,7 +94,7 @@ export const actions = {
           commit('setAciertoMsg', 'Enhorabuena has conseguido logarte')
           commit('setError', '')
           localStorage.setItem('admin', true)
-          commit('setAcierto', true)
+          // commit('setAcierto', true)
           router.push({ path: '/' })
         })
         .catch((error) => {
