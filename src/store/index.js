@@ -6,6 +6,8 @@ export default createStore({
   state: {
     sidebarVisible: '',
     sidebarUnfoldable: false,
+    visibleModal: false,
+    modalTitle: '',
   },
   mutations: {
     toggleSidebar(state) {
@@ -17,10 +19,31 @@ export default createStore({
     updateSidebarVisible(state, payload) {
       state.sidebarVisible = payload.value
     },
+    setVisibleModal(state, vm) {
+      state.visibleModal = vm
+    },
+    setModalTitle(state, mt) {
+      state.modalTitle = mt
+    },
   },
-  actions: {},
+  actions: {
+    updateVisibleModal({ commit }, visible) {
+      commit('setVisibleModal', visible)
+    },
+    updateModalTitle({ commit }, title) {
+      commit('setModalTitle', title)
+    },
+  },
   modules: {
     firstModule: login,
     secondModule: home,
+  },
+  getters: {
+    getVisibleModal(state) {
+      return state.visibleModal
+    },
+    getModalTitle(state) {
+      return state.modalTitle
+    },
   },
 })

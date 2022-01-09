@@ -1,4 +1,5 @@
 <template>
+  <GenericModal :titulo="modalTitleComputed" />
   <Toast :title="title" :body="body" :bodyOk="bodyOk" />
   <div>
     <CRow>
@@ -51,6 +52,17 @@
                 :key="reload"
                 style="height: 300px; max-height: 300px; margin-top: 40px"
               />
+            </CRow>
+            <CRow v-if="admin != null">
+              <CCol class="col col-md-3">
+                <CButton
+                  type="submit"
+                  color="dark"
+                  class="mb-3 mt-2"
+                  @click="updateVisibleModal(true)"
+                  >Editar</CButton
+                >
+              </CCol>
             </CRow>
           </CCardBody>
           <CCardFooter>
@@ -115,6 +127,7 @@
 <script>
 import MainChartExample from './charts/MainChartExample'
 import Toast from '@/components/Toast'
+import GenericModal from '@/components/GenericModal'
 import { useStore } from 'vuex'
 import { computed, onBeforeMount } from 'vue'
 
@@ -123,6 +136,7 @@ export default {
   components: {
     MainChartExample,
     Toast,
+    GenericModal,
   },
 
   setup() {
@@ -132,6 +146,11 @@ export default {
     function processPhraseFormMethod() {
       store.dispatch('processPhraseForm', newPhrase)
     }
+    function updateVisibleModal(visible) {
+      store.dispatch('updateVisibleModal', visible)
+      store.dispatch('updateModalTitle', 'Editar gráfica')
+    }
+
     const admin = localStorage.getItem('admin')
     onBeforeMount(() => {
       // eslint-disable-next-line no-constant-condition
@@ -177,6 +196,7 @@ export default {
       graphicDataPrincipalData,
       admin,
       processPhraseFormMethod,
+      updateVisibleModal,
       newPhrase,
       trigger,
       body,
