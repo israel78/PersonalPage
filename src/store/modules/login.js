@@ -28,9 +28,6 @@ export const state = {
   aciertoMsg: '',
 }
 export const mutations = {
-  setVisibleModal(state, vm) {
-    state.visibleModal = vm
-  },
   setSettings(state, captchaSettings) {
     state.captchaSettings = captchaSettings
   },
