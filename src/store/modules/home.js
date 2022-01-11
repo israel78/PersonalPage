@@ -5,8 +5,8 @@ axios.defaults.headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
 }
-//axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/home/app'
-axios.defaults.baseURL = 'http://localhost:8082'
+axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/home/app'
+axios.defaults.baseURL = 'http://localhost:8084'
 export const state = {
   phrase: '',
   aciertoMsg: '',
@@ -35,6 +35,9 @@ export const mutations = {
     state.graphicValue = graphicValue
     state.graphicValuesList.push(state.graphicValue)
   },
+  setGraphicValueToZero(state, graphicValue) {
+    state.graphicValuesList = graphicValue
+  },
   setGraphicPrincipadData(state, graphicPrincipalData) {
     state.graphicPrincipalData = graphicPrincipalData
   },
@@ -44,16 +47,17 @@ export const mutations = {
 }
 export const actions = {
   getGraphicDataAndPhrase({ commit }) {
-    axios
-      .get('/api/home/app/getgraphicdataandphrase?userid=1')
-      .then((response) => {
-        commit('setPhrase', response.data.importantPhrase)
-        commit('setGraphicPrincipadData', response.data.graphic)
-        response.data.graphic.graphicValuesList.forEach((element) =>
-          commit('setGraphicValue', element),
-        )
-      })
-      .catch((error) => console.log(error))
+    commit('setGraphicValueToZero', []),
+      axios
+        .get('/api/home/app/getgraphicdataandphrase?userid=1')
+        .then((response) => {
+          commit('setPhrase', response.data.importantPhrase)
+          commit('setGraphicPrincipadData', response.data.graphic)
+          response.data.graphic.graphicValuesList.forEach((element) =>
+            commit('setGraphicValue', element),
+          )
+        })
+        .catch((error) => console.log(error))
   },
   async processPhraseForm({ commit }, phrase) {
     console.log('entro')

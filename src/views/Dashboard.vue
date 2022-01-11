@@ -1,5 +1,5 @@
 <template>
-  <GenericModal :titulo="modalTitleComputed" />
+  <GenericModal principalData:="graphicDataPrincipalData" />
   <Toast :title="title" :body="body" :bodyOk="bodyOk" />
   <div>
     <CRow>
@@ -133,6 +133,7 @@ import { computed, onBeforeMount } from 'vue'
 
 export default {
   name: 'Dashboard',
+  inheritAttrs: false,
   components: {
     MainChartExample,
     Toast,

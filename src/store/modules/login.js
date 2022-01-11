@@ -7,7 +7,7 @@ axios.defaults.headers = {
   'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
 }
 //axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/captcha'
-axios.defaults.baseURL = 'http://localhost:8082'
+axios.defaults.baseURL = 'http://localhost:8084'
 export const state = {
   username: '',
   password: '',
