@@ -12,78 +12,130 @@
       </CRow>
     </CModalHeader>
     <CModalBody>
-      <CInputGroup class="mb-3">
-        <CInputGroupText id="basic-addon1">Titulo</CInputGroupText>
-        <CFormInput
-          placeholder=""
-          aria-label=""
-          aria-describedby="basic-addon1"
-          v-model="pData.title"
-        />
-      </CInputGroup>
-      <CInputGroup class="mb-3">
-        <CInputGroupText id="basic-addon1">Sub-titulo</CInputGroupText>
-        <CFormInput
-          placeholder=""
-          aria-label=""
-          aria-describedby="basic-addon1"
-          v-model="pData.subTitle"
-        />
-      </CInputGroup>
-      <CInputGroup class="mb-3">
-        <CInputGroupText id="basic-addon1">Nombre línea 1</CInputGroupText>
-        <CFormInput
-          placeholder=""
-          aria-label=""
-          aria-describedby="basic-addon1"
-          v-model="pData.lineGraphicNameOne"
-        />
-      </CInputGroup>
-      <CInputGroup class="mb-3">
-        <CInputGroupText id="basic-addon1">Nombre línea 2</CInputGroupText>
-        <CFormInput
-          placeholder=""
-          aria-label=""
-          aria-describedby="basic-addon1"
-          v-model="pData.lineGraphicNameTwo"
-        />
-      </CInputGroup>
-      <CInputGroup class="mb-3">
-        <CInputGroupText id="basic-addon1">Nombre línea 3</CInputGroupText>
-        <CFormInput
-          placeholder=""
-          aria-label=""
-          aria-describedby="basic-addon1"
-          v-model="pData.lineGraphicNameTree"
-        />
-      </CInputGroup>
-      <CRow>
-        <CCol>
-          <CFormLabel for="basic-url">Valores x / lineas 1,2 y 3</CFormLabel>
-        </CCol>
-        <CCol>
-          <CLink @click="pushValue">Añadir valores gráfica</CLink>
-        </CCol>
-      </CRow>
-      <CCol>
-        <CRow v-for="item in pData.graphicValuesList" :key="item.id">
-          <CInputGroup class="mb-3">
-            <CFormInput placeholder="" aria-label="" v-model="item.xvalue" />
-            <CInputGroupText>/</CInputGroupText>
-            <CFormInput placeholder="" aria-label="" v-model="item.yvalue1" />
-            <CInputGroupText>/</CInputGroupText>
-            <CFormInput placeholder="" aria-label="" v-model="item.yvalue2" />
-            <CInputGroupText>/</CInputGroupText>
-            <CFormInput placeholder="" aria-label="" v-model="item.yvalue3" />
-          </CInputGroup>
+      <CForm
+        id="graphicForm"
+        :validated="true"
+        @submit.prevent="this.processGraphicModalForm(pData)"
+      >
+        <CInputGroup class="mb-3">
+          <CInputGroupText id="basic-addon1">Titulo</CInputGroupText>
+          <CFormInput
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+            v-model="pData.title"
+            required
+          />
+          <CFormFeedback invalid>
+            El título no puede estar vacío
+          </CFormFeedback>
+        </CInputGroup>
+        <CInputGroup class="mb-3">
+          <CInputGroupText id="basic-addon1">Sub-titulo</CInputGroupText>
+          <CFormInput
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+            v-model="pData.subTitle"
+          />
+        </CInputGroup>
+        <CInputGroup class="mb-3">
+          <CInputGroupText id="basic-addon1">Nombre línea 1</CInputGroupText>
+          <CFormInput
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+            v-model="pData.lineGraphicNameOne"
+            required
+          />
+          <CFormFeedback invalid> El valor es requerido </CFormFeedback>
+        </CInputGroup>
+        <CInputGroup class="mb-3">
+          <CInputGroupText id="basic-addon1">Nombre línea 2</CInputGroupText>
+          <CFormInput
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+            v-model="pData.lineGraphicNameTwo"
+            required
+          />
+          <CFormFeedback invalid> El valor es requerido </CFormFeedback>
+        </CInputGroup>
+        <CInputGroup class="mb-3">
+          <CInputGroupText id="basic-addon1">Nombre línea 3</CInputGroupText>
+          <CFormInput
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+            v-model="pData.lineGraphicNameTree"
+            required
+          />
+          <CFormFeedback invalid> El valor es requerido </CFormFeedback>
+        </CInputGroup>
+        <CRow>
+          <CCol>
+            <CFormLabel for="basic-url">Valores x / lineas 1,2 y 3</CFormLabel>
+          </CCol>
+          <CCol>
+            <CLink @click="pushValue">Añadir valores gráfica</CLink>
+          </CCol>
         </CRow>
-      </CCol>
+        <CCol>
+          <CRow v-for="item in pData.graphicValuesList" :key="item.id">
+            <CInputGroup class="mb-3">
+              <CInputGroupText id="basic-addon1"> Valor x</CInputGroupText>
+              <CFormInput
+                type="text"
+                placeholder=""
+                aria-label=""
+                v-model="item.xvalue"
+                required
+              />
+              <CFormFeedback invalid> El valor es requerido </CFormFeedback>
+            </CInputGroup>
+            <CInputGroup class="mb-3">
+              <CFormInput
+                type="number"
+                placeholder=""
+                aria-label=""
+                v-model="item.yvalue1"
+                number
+                required
+              />
+              <CInputGroupText>/</CInputGroupText>
+              <CFormInput
+                type="number"
+                placeholder=""
+                aria-label=""
+                v-model="item.yvalue2"
+                number
+                required
+              />
+              <CInputGroupText>/</CInputGroupText>
+              <CFormInput
+                type="number"
+                placeholder=""
+                aria-label=""
+                v-model="item.yvalue3"
+                number
+                required
+              />
+              <CButton
+                color="secondary"
+                @click="updateGraphicValuesList(item.xvalue, item.id)"
+                >Borrar</CButton
+              >
+              <CFormFeedback invalid> valor numérico </CFormFeedback>
+            </CInputGroup>
+          </CRow>
+          <CButton color="primary " type="submit">Guardar cambios</CButton>
+        </CCol>
+      </CForm>
     </CModalBody>
     <CModalFooter>
       <CButton color="secondary" @click="this.updateVisibleModal(false)"
         >Close</CButton
       >
-      <CButton color="primary">Save changes</CButton>
     </CModalFooter>
   </CModal>
 </template>
@@ -122,6 +174,12 @@ export default {
   methods: {
     ...mapActions({
       updateVisibleModal: 'updateVisibleModal',
+      processGraphicModalForm: 'processGraphicModalForm',
+      updateGraphicValuesList: function (value, value2, id) {
+        this.pData.graphicValuesList = this.pData.graphicValuesList.filter(
+          (item) => value2 != item.xvalue && id !== item.id,
+        )
+      },
     }),
     pushValue: function () {
       this.pData.graphicValuesList.push({

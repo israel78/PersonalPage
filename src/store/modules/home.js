@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 axios.defaults.withCredentials = true
 axios.defaults.headers = {
   Authorization: '123456',
@@ -82,6 +83,32 @@ export const actions = {
           commit('setErrorMsg', 'Error de comunicación con el servidor')
         }
       })
+  },
+  async processGraphicModalForm({ commit }, graphicData) {
+    console.log('entro :' + graphicData)
+    commit('setGraphicValueList', [])
+    commit('setAciertoMsg', '')
+    commit('setErrorMsg', '')
+    await axios
+      .post('/api/home/app/setgraphicdata?userid=1', graphicData)
+      // eslint-disable-next-line no-unused-vars
+      .then((response) => {
+        commit('setGraphicPrincipadData', graphicData)
+        commit('setGraphicValueList', [])
+        commit('setVisibleModal', false)
+        commit('setErrorMsg', '')
+        commit('setAciertoMsg', response.data.value)
+      })
+      .catch((error) => {
+        if (error.response) {
+          commit('setAciertoMsg', '')
+          commit('setErrorMsg', error.response.data.value)
+        } else {
+          commit('setAciertoMsg', '')
+          commit('setErrorMsg', 'Error de comunicación con el servidor')
+        }
+      })
+    setTimeout(router.go(), 3000)
   },
   setAciertoMsgToEmpty({ commit }) {
     commit('setAciertoMsg', '')

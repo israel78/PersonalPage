@@ -144,6 +144,7 @@ export default {
     const store = useStore()
     let newPhrase = ''
     let trigger = 0
+    let pData = ''
     function processPhraseFormMethod() {
       store.dispatch('processPhraseForm', newPhrase)
     }
@@ -182,8 +183,13 @@ export default {
     //fin
     // si no hay datos de la gráfica recargamos el componente
     const reload = computed(() => {
-      if (store.getters.getGraphicValueList.length == 0) return 1
-      else return 0
+      if (store.getters.getGraphicValueList.length == 0) {
+        pData = store.getters.getGraphicValueList
+        return 1
+      }
+      if (pData != store.getters.getGraphicValueList) {
+        return 1
+      } else return 0
     })
     //fin
     let date = new Date()
