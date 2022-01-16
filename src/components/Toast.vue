@@ -50,7 +50,7 @@ export default {
     },
     bodyOk: function (current) {
       if (current !== '') this.createToast()
-      setTimeout(this.setAciertoMsgToEmpty(), 2000)
+      this.setAciertoMsgToEmpty()
     },
   },
 }

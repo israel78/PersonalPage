@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import * as login from '@/store/modules/login.js'
 import * as home from '@/store/modules/home.js'
+import * as experience from '@/store/modules/experience.js'
 
 export default createStore({
   state: {
@@ -37,6 +38,7 @@ export default createStore({
   modules: {
     firstModule: login,
     secondModule: home,
+    thirdModule: experience,
   },
   getters: {
     getVisibleModal(state) {

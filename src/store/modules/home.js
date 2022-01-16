@@ -108,7 +108,9 @@ export const actions = {
           commit('setErrorMsg', 'Error de comunicación con el servidor')
         }
       })
-    setTimeout(router.go(), 3000)
+    setTimeout(function () {
+      router.go()
+    }, 2000)
   },
   setAciertoMsgToEmpty({ commit }) {
     commit('setAciertoMsg', '')
