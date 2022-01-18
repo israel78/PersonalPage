@@ -1,12 +1,18 @@
 <template>
   <CCard>
-    <CCardImage orientation="top" :src="vueImg" />
+    <CCardImage
+      orientation="top"
+      src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+    />
     <CCardHeader>
       <h4 style="float: left">
-        <CIcon :icon="icon.cilTerminal" /> Experiecncia 1
+        <CIcon :icon="icon.cilTerminal" /> {{ experience.title }}
       </h4>
       <p style="float: right">
-        <CIcon :icon="icon.cilTerminal" /> fecha inicio - fecha fin
+        <CIcon :icon="icon.cilTerminal" />
+        {{ formatDate(experience.startDate) }}
+        -
+        {{ formatDate(experience.endDate) }}
       </p>
     </CCardHeader>
     <CCardBody>
@@ -16,9 +22,7 @@
             <CCol md="3">
               <b>Función/es:</b>
             </CCol>
-            <CCol md="9">
-              <p>Programador</p>
-            </CCol>
+            <TextBoxItemsList :textItems="functionsComputed" />
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
@@ -26,9 +30,7 @@
             <CCol md="3">
               <b>Tecnologías:</b>
             </CCol>
-            <CCol md="9">
-              <p>css - HTML</p>
-            </CCol>
+            <TextBoxItemsList :textItems="experienceComputed" />
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
@@ -36,9 +38,7 @@
             <CCol md="3">
               <b>Entornos de desarrollo:</b>
             </CCol>
-            <CCol md="9">
-              <p>Eclipse - Intellij</p>
-            </CCol>
+            <TextBoxItemsList :textItems="devComputed" />
           </CRow>
         </CListGroupItem>
       </CListGroup>
@@ -48,14 +48,70 @@
 <script>
 import * as icon from '@coreui/icons'
 import vueImg from '@/assets/images/vue.jpg'
+import TextBoxItemsList from '@/components/TextBoxItemsList'
+import { computed } from 'vue'
+import moment from 'moment'
 export default {
   props: {
-    principalData: Object,
+    experience: Object,
   },
-  setup() {
+  components: { TextBoxItemsList },
+  setup(props) {
+    const functionsComputed = computed({
+      get() {
+        let jobsfuntionsReturn = []
+        props.experience.JobFunctions.forEach((item) => {
+          let itemOut = {
+            id: 0,
+            name: '',
+          }
+          itemOut.id = item.id
+          itemOut.name = item.jobFunctionName
+          jobsfuntionsReturn.push(itemOut)
+        })
+        return jobsfuntionsReturn
+      },
+    })
+    const formatDate = function (date) {
+      return moment().format('MM/YYYY', date)
+    }
+    const experienceComputed = computed({
+      get() {
+        let skillsReturn = []
+        props.experience.skills.forEach((item) => {
+          let itemOut = {
+            id: 0,
+            name: '',
+          }
+          itemOut.id = item.id
+          itemOut.name = item.skillName
+          skillsReturn.push(itemOut)
+        })
+        return skillsReturn
+      },
+    })
+    const devComputed = computed({
+      get() {
+        let devReturn = []
+        props.experience.developerTools.forEach((item) => {
+          let itemOut = {
+            id: 0,
+            name: '',
+          }
+          itemOut.id = item.id
+          itemOut.name = item.devToolName
+          devReturn.push(itemOut)
+        })
+        return devReturn
+      },
+    })
     return {
       icon,
       vueImg,
+      experienceComputed,
+      devComputed,
+      functionsComputed,
+      formatDate,
     }
   },
 }

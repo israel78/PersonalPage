@@ -37,6 +37,7 @@
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "vue": "^3.2.23",
+    "vue-moment": "^4.1.0",
     "vue-router": "^4.0.12",
     "vue3-pdf": "^4.2.6",
     "vuex": "^4.0.2"

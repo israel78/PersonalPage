@@ -7,7 +7,7 @@
   >
     <CCol v-for="item in expValuesComputed" :key="item.id">
       <!-- una caja por experiencia-->
-      <ExperienceBox />
+      <ExperienceBox :experience="item" />
     </CCol>
   </CRow>
 </template>
