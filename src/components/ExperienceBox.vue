@@ -20,6 +20,14 @@
         <CListGroupItem>
           <CRow>
             <CCol md="3">
+              <b>Descripción:</b>
+            </CCol>
+            {{ experience.description }}
+          </CRow>
+        </CListGroupItem>
+        <CListGroupItem>
+          <CRow>
+            <CCol md="3">
               <b>Función/es:</b>
             </CCol>
             <TextBoxItemsList :textItems="functionsComputed" />
@@ -60,13 +68,13 @@ export default {
     const functionsComputed = computed({
       get() {
         let jobsfuntionsReturn = []
-        props.experience.JobFunctions.forEach((item) => {
+        props.experience.jobFunctionItems.forEach((item) => {
           let itemOut = {
             id: 0,
             name: '',
           }
           itemOut.id = item.id
-          itemOut.name = item.jobFunctionName
+          itemOut.name = item.name
           jobsfuntionsReturn.push(itemOut)
         })
         return jobsfuntionsReturn
@@ -78,13 +86,13 @@ export default {
     const experienceComputed = computed({
       get() {
         let skillsReturn = []
-        props.experience.skills.forEach((item) => {
+        props.experience.skillItems.forEach((item) => {
           let itemOut = {
             id: 0,
             name: '',
           }
           itemOut.id = item.id
-          itemOut.name = item.skillName
+          itemOut.name = item.name
           skillsReturn.push(itemOut)
         })
         return skillsReturn
@@ -93,13 +101,13 @@ export default {
     const devComputed = computed({
       get() {
         let devReturn = []
-        props.experience.developerTools.forEach((item) => {
+        props.experience.devToolItems.forEach((item) => {
           let itemOut = {
             id: 0,
             name: '',
           }
           itemOut.id = item.id
-          itemOut.name = item.devToolName
+          itemOut.name = item.name
           devReturn.push(itemOut)
         })
         return devReturn
