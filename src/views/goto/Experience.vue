@@ -1,4 +1,7 @@
 <template>
+  <CRow fluid v-if="admin != null">
+    <EditItemsForExpericence />
+  </CRow>
   <CRow
     :class="{
       'row row-cols-1': window.outerWidth < 600,
@@ -17,12 +20,14 @@ import VueImg from '@/assets/images/vue.jpg'
 import ExperienceBox from '@/components/ExperienceBox'
 import { computed, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
+import EditItemsForExpericence from '@/components/EditItemsForExpericence'
 export default {
   name: 'Experience',
-  components: { ExperienceBox },
+  components: { EditItemsForExpericence, ExperienceBox },
   setup() {
     const store = useStore()
     let expData = []
+    const admin = localStorage.getItem('admin')
     onBeforeMount(() => {
       if (
         store.getters.getExperiences == '' ||
@@ -40,6 +45,7 @@ export default {
       VueImg,
       expData,
       expValuesComputed,
+      admin,
     }
   },
 }
