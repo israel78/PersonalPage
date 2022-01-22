@@ -11,47 +11,46 @@
     </CCol>
     <CButton
       color="dark"
-      @click="toggleVisibleValue"
+      @click="toggleVisibleValue('skills')"
       style="margin-left: 1%; margin-bottom: 0.5%"
       >habilidades</CButton
     >
     <CButton
-      @click="toggleVisibleValue"
+      @click="toggleVisibleValue('tools')"
       style="margin-left: 1%; margin-bottom: 0.5%"
       color="dark"
       >herramientas de desarrollo</CButton
     >
     <CButton
-      @click="toggleVisibleValue"
+      @click="toggleVisibleValue('functions')"
       style="margin-left: 1%; margin-bottom: 0.5%"
       color="dark"
       >funciones</CButton
     >
     <CCollapse :visible="visible">
-      <CCard class="mt-3">
-        <CCardBody>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accuses
-          terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-          labore wes anderson cred nesciunt sapiente ea proident.
-        </CCardBody>
-      </CCard>
+      <ItemsExperienceForm :title="title"></ItemsExperienceForm>
     </CCollapse>
   </CContainer>
 </template>
 
 <script>
 import { ref } from 'vue'
+import ItemsExperienceForm from '@/components/ItemsExperienceForm'
 export default {
   name: 'EditItemsForExpericence',
+  components: { ItemsExperienceForm },
   setup() {
     const visible = ref(false)
-    const toggleVisibleValue = () => {
+    const title = ref('')
+    const toggleVisibleValue = (value) => {
       visible.value = !visible.value
+      title.value = value
       console.log(visible.value)
     }
     return {
       toggleVisibleValue,
       visible,
+      title,
     }
   },
 }
