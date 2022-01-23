@@ -23,14 +23,9 @@ export default {
     optionsList: Object,
     valuesDefault: Object,
   },
-  setup(props, emit) {
+  setup(props) {
     const value = computed({
       get: () => props.valuesDefault,
-      set: (value) => {
-        console.log(props.valuesDefault)
-        console.log(value)
-        emit('update:valuesDefault', value)
-      },
     })
 
     return {
