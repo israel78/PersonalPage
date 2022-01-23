@@ -21,6 +21,15 @@ import ExperienceBox from '@/components/ExperienceBox'
 import { computed, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import EditItemsForExpericence from '@/components/EditItemsForExpericence'
+import axios from 'axios'
+axios.defaults.withCredentials = true
+axios.defaults.headers = {
+  Authorization: '123456',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+}
+axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/home/app'
+axios.defaults.baseURL = 'http://localhost:8084'
 export default {
   name: 'Experience',
   components: { EditItemsForExpericence, ExperienceBox },

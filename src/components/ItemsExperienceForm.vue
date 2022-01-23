@@ -2,26 +2,40 @@
   <CCard class="mt-3">
     <CCardBody>
       <b>{{ title }}</b> - (Las opciones desmarcadas están asignadas)
-      <Multiselect v-model="value" mode="tags" :options="options"></Multiselect>
+      <Multiselect
+        v-model="value"
+        mode="tags"
+        :searchable="true"
+        :createTag="true"
+        :options="optionsList"
+      />
     </CCardBody>
   </CCard>
 </template>
 <script>
 import Multiselect from '@vueform/multiselect'
+import { computed } from 'vue'
 export default {
   components: { Multiselect },
   name: 'ItemsExperienceForm',
   props: {
     title: String,
+    optionsList: Object,
+    valuesDefault: Object,
   },
-  setup() {
-    const value = []
-    const options = [
-      { value: 'batman', label: 'Batman' },
-      { value: 'robin', label: 'Robin', disabled: true },
-      { value: 'joker', label: 'Joker' },
-    ]
-    return { options, value }
+  setup(props, emit) {
+    const value = computed({
+      get: () => props.valuesDefault,
+      set: (value) => {
+        console.log(props.valuesDefault)
+        console.log(value)
+        emit('update:valuesDefault', value)
+      },
+    })
+
+    return {
+      value,
+    }
   },
 }
 </script>
