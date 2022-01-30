@@ -9,3 +9,13 @@
   background-color: white !important;
   transition: opacity 0.15s linear;
 }
+.multiselect-tag {
+  background-color: gray !important;
+  font-weight: normal !important;
+}
+.multiselect.is-active {
+  box-shadow: 0px 0px 5px 2px gray !important;
+}
+.tooltip .tooltiptext {
+  text-align: left !important;
+}
