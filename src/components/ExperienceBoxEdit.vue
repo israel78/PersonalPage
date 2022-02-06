@@ -25,12 +25,6 @@
           :value="experienceFormComputed.title"
         />
       </div>
-      <!--<p style="float: right">
-        <CIcon :icon="icon.cilTerminal" />
-        {{ formatDate(experience.startDate) }}
-        -
-        {{ formatDate(experience.endDate) }}
-      </p>-->
       <div class="mb-3">
         <CFormLabel for="exampleFormControlInput3">
           <h6>Desde</h6>
@@ -55,35 +49,69 @@
     <CCardBody>
       <CListGroup flush>
         <CListGroupItem>
+          <div class="mb-4">
+            <CFormLabel for="exampleFormControlInput1">
+              <h6>Descripción</h6>
+            </CFormLabel>
+            <CFormTextarea
+              type="text"
+              id="exampleFormControlInput1"
+              :value="experienceFormComputed.description"
+            />
+          </div>
+        </CListGroupItem>
+        <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Descripción:</b>
+            <CCol md="9">
+              <b>Función/es</b>
             </CCol>
-            {{ experience.description }}
+            <Multiselect
+              beforeList
+              v-model="valuesFunctions"
+              mode="tags"
+              :searchable="true"
+              :createTag="true"
+              :options="functionsComputed"
+            />
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Función/es:</b>
+            <CCol md="9">
+              <b>Tecnologías</b>
             </CCol>
-            <TextBoxItemsList :textItems="functionsComputed" />
+            <Multiselect
+              beforeList
+              v-model="valuesSkills"
+              mode="tags"
+              :searchable="true"
+              :createTag="true"
+              :options="experienceComputed"
+            />
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Tecnologías:</b>
+            <CCol md="9">
+              <b>Entornos de desarrollo</b>
             </CCol>
-            <TextBoxItemsList :textItems="experienceComputed" />
+            <Multiselect
+              beforeList
+              v-model="valuesDevTools"
+              mode="tags"
+              :searchable="true"
+              :createTag="true"
+              :options="devComputed"
+            />
           </CRow>
-        </CListGroupItem>
-        <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Entornos de desarrollo:</b>
-            </CCol>
-            <TextBoxItemsList :textItems="devComputed" />
+            <CButton
+              class="mt-3"
+              color="dark"
+              size="sm"
+              @click="processItemsExpMultiselect()"
+              >Editar experiencia</CButton
+            >
           </CRow>
         </CListGroupItem>
       </CListGroup>
@@ -93,17 +121,16 @@
 <script>
 import * as icon from '@coreui/icons'
 import vueImg from '@/assets/images/vue.jpg'
-import TextBoxItemsList from '@/components/TextBoxItemsList'
 import { computed } from 'vue'
-import moment from 'moment'
 import 'vue3-date-time-picker/dist/main.css'
 import Datepicker from 'vue3-date-time-picker'
 import 'vue3-date-time-picker/dist/main.css'
+import Multiselect from '@vueform/multiselect'
 export default {
   props: {
     experience: Object,
   },
-  components: { TextBoxItemsList, Datepicker },
+  components: { Datepicker, Multiselect },
   setup(props) {
     let dateFrom = {
       month: new Date(props.experience.startDate).getMonth() + 1,
@@ -127,49 +154,61 @@ export default {
         experienceForm = value
       },
     })
+    const valuesFunctions = computed({
+      get: () => {
+        return props.experience.jobFunctionItems.map((i) => {
+          return i.name
+        })
+      },
+    })
     const functionsComputed = computed({
       get() {
         let jobsfuntionsReturn = []
         props.experience.jobFunctionItems.forEach((item) => {
-          let itemOut = {
-            id: 0,
-            name: '',
-          }
+          let itemOut = {}
           itemOut.id = item.id
-          itemOut.name = item.name
+          itemOut.value = item.name
+          itemOut.label = item.name
           jobsfuntionsReturn.push(itemOut)
         })
         return jobsfuntionsReturn
       },
     })
-    const formatDate = function (date) {
-      return moment().format('MM/YYYY', date)
-    }
+    const valuesSkills = computed({
+      get: () => {
+        return props.experience.skillItems.map((i) => {
+          return i.name
+        })
+      },
+    })
     const experienceComputed = computed({
       get() {
         let skillsReturn = []
         props.experience.skillItems.forEach((item) => {
-          let itemOut = {
-            id: 0,
-            name: '',
-          }
+          let itemOut = {}
           itemOut.id = item.id
-          itemOut.name = item.name
+          itemOut.value = item.name
+          itemOut.label = item.name
           skillsReturn.push(itemOut)
         })
         return skillsReturn
+      },
+    })
+    const valuesDevTools = computed({
+      get: () => {
+        return props.experience.devToolItems.map((i) => {
+          return i.name
+        })
       },
     })
     const devComputed = computed({
       get() {
         let devReturn = []
         props.experience.devToolItems.forEach((item) => {
-          let itemOut = {
-            id: 0,
-            name: '',
-          }
+          let itemOut = {}
           itemOut.id = item.id
-          itemOut.name = item.name
+          itemOut.value = item.name
+          itemOut.label = item.name
           devReturn.push(itemOut)
         })
         return devReturn
@@ -183,9 +222,11 @@ export default {
       functionsComputed,
       experienceForm,
       experienceFormComputed,
-      formatDate,
       dateTo,
       dateFrom,
+      valuesDevTools,
+      valuesSkills,
+      valuesFunctions,
     }
   },
 }

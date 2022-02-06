@@ -19,33 +19,41 @@
       <CListGroup flush>
         <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Descripción:</b>
+            <CCol md="9">
+              <b>Descripción</b>
             </CCol>
-            {{ experience.description }}
+          </CRow>
+          <CRow>
+            <p>{{ experience.description }}</p>
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Función/es:</b>
+            <CCol md="9">
+              <b>Función/es</b>
             </CCol>
-            <TextBoxItemsList :textItems="functionsComputed" />
+            <CRow>
+              <TextBoxItemsList :textItems="functionsComputed" />
+            </CRow>
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
           <CRow>
-            <CCol md="3">
+            <CCol md="9">
               <b>Tecnologías:</b>
             </CCol>
-            <TextBoxItemsList :textItems="experienceComputed" />
+            <CRow>
+              <TextBoxItemsList :textItems="experienceComputed" />
+            </CRow>
           </CRow>
         </CListGroupItem>
         <CListGroupItem>
           <CRow>
-            <CCol md="3">
-              <b>Entornos de desarrollo:</b>
+            <CCol md="9">
+              <b>Entornos de desarrollo</b>
             </CCol>
+          </CRow>
+          <CRow>
             <TextBoxItemsList :textItems="devComputed" />
           </CRow>
         </CListGroupItem>
