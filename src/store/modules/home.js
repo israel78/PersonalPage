@@ -6,12 +6,10 @@ axios.defaults.headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
 }
-axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/home/app'
+//axios.defaults.baseURL = 'https://captchaback.herokuapp.com'
 axios.defaults.baseURL = 'http://localhost:8084'
 export const state = {
   phrase: '',
-  aciertoMsg: '',
-  errorMsg: '',
   graphicPrincipalData: '',
   graphicValuesList: [],
   graphicValue: {
@@ -25,12 +23,6 @@ export const state = {
 export const mutations = {
   setPhrase(state, phrase) {
     state.phrase = phrase
-  },
-  setAciertoMsg(state, aciertoMsg) {
-    state.aciertoMsg = aciertoMsg
-  },
-  setErrorMsg(state, error) {
-    state.errorMsg = error
   },
   setGraphicValue(state, graphicValue) {
     state.graphicValue = graphicValue
@@ -128,11 +120,5 @@ export const getters = {
   },
   getGraphicPrincipalData: (state) => {
     return state.graphicPrincipalData
-  },
-  getErrorMsg: (state) => {
-    return state.errorMsg
-  },
-  getAciertoMsg: (state) => {
-    return state.aciertoMsg
   },
 }

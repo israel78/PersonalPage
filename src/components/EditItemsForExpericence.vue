@@ -30,6 +30,19 @@
       color="dark"
       >funciones</CButton
     >
+    <CTooltip
+      content="Las opciones deshabilitadas están asociadas a alguna experiencia. Solo se pueden borrar las opciones que no están asociadas a alguna experiencia"
+      placement="bottom"
+    >
+      <template #toggler="{ on }">
+        <CIcon
+          :icon="icon.cilInfo"
+          color="secondary"
+          style="margin-left: 1%"
+          v-on="on"
+        ></CIcon>
+      </template>
+    </CTooltip>
     <CCollapse :visible="visible">
       <CContainer
         style="
@@ -44,24 +57,37 @@
             :titleHeader="titleHeader"
             :optionsList="skillOptions"
             :valuesDefault="valuesDefault"
+            @change="changeDefault"
           ></ItemsExperienceForm>
         </CRow>
-        <CRow class="ml-1 mr-1">
-          <CButton
-            class="col-1 mt-2"
-            color="dark"
-            size="sm"
-            @click="processItemsExpMultiselect()"
-            >Guardar</CButton
+        <CRow class="pl-1 pr-1">
+          <CCol
+            class="col-1"
+            v-if="valuesDefaultSize != null && valuesDefaultSize < 16"
           >
-          <CTooltip
-            content="Las opciones deshabilitadas están asociadas a alguna experiencia. Solo se pueden borrar las opciones que no están asociadas a alguna experiencia"
-            placement="bottom"
-          >
-            <template #toggler="{ on }">
-              <CIcon :icon="icon.cilInfo" color="secondary" v-on="on"></CIcon>
-            </template>
-          </CTooltip>
+            <CButton
+              color="dark"
+              size="sm"
+              variant="ghost"
+              @click="processItemsExpMultiselect()"
+              >Guardar</CButton
+            >
+          </CCol>
+          <CCol class="col-1" v-if="valuesDefaultSize >= 16">
+            <CTooltip
+              content=" El número de Items sin asociar no puede ser mayor de 15 elementos"
+              placement="bottom"
+            >
+              <template #toggler="{ on }">
+                <CIcon
+                  :icon="icon.cilInfo"
+                  color="secondary"
+                  style="margin-left: 1%; margin-top: 15px"
+                  v-on="on"
+                ></CIcon>
+              </template>
+            </CTooltip>
+          </CCol>
         </CRow>
       </CContainer>
     </CCollapse>
@@ -77,16 +103,21 @@ export default {
   components: { ItemsExperienceForm },
   setup() {
     const store = useStore()
-    const valuesDefault = computed({
+    let valuesDefaultSize = ref(0)
+    const changeDefault = function (reply) {
+      valuesDefaultSize.value = reply.length
+    }
+    let valuesDefault = computed({
       get() {
         if (store.getters.getExperienceItems != null) {
-          return store.getters.getExperienceItems
+          const valuesDefault = store.getters.getExperienceItems
             .filter((item) => {
               return item.status === false
             })
             .map((item) => {
               return item.name
             })
+          return valuesDefault
         }
         return null
       },
@@ -113,6 +144,7 @@ export default {
     const title = ref('')
     const titleHeader = ref('')
     const toggleVisibleValue = (value) => {
+      valuesDefaultSize.value = 0
       visible.value = !visible.value
       if (!visible.value) {
         disabledSkills.value = false
@@ -154,8 +186,10 @@ export default {
       store.dispatch('setExperienceItemsSendToZeroAction')
     }
     return {
+      changeDefault,
       toggleVisibleValue,
       visible,
+      valuesDefaultSize,
       disabledSkills,
       disabledFunc,
       disabledTools,

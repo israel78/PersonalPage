@@ -1,8 +1,10 @@
 <template>
+  <Toast :title="title" :body="body" :bodyOk="bodyOk" />
   <CRow fluid v-if="admin != null">
     <EditItemsForExpericence />
   </CRow>
   <CRow
+    v-if="admin == null"
     :class="{
       'row row-cols-1': window.outerWidth < 600,
       'row row-cols-2': window.outerWidth > 600,
@@ -13,29 +15,42 @@
       <ExperienceBox :experience="item" />
     </CCol>
   </CRow>
+  <CRow
+    v-if="admin != null"
+    :class="{
+      'row row-cols-1': window.outerWidth < 600,
+      'row row-cols-2': window.outerWidth > 600,
+    }"
+  >
+    <CCol v-for="item in expValuesComputed" :key="item.id">
+      <!-- una caja por experiencia-->
+      <ExperienceBoxEdit :experience="item" />
+    </CCol>
+  </CRow>
 </template>
 <script>
+import Toast from '@/components/Toast'
 import * as icon from '@coreui/icons'
 import VueImg from '@/assets/images/vue.jpg'
 import ExperienceBox from '@/components/ExperienceBox'
 import { computed, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import EditItemsForExpericence from '@/components/EditItemsForExpericence'
-import axios from 'axios'
-axios.defaults.withCredentials = true
-axios.defaults.headers = {
-  Authorization: '123456',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
-}
-axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/home/app'
-axios.defaults.baseURL = 'http://localhost:8084'
+import ExperienceBoxEdit from '@/components/ExperienceBoxEdit'
 export default {
   name: 'Experience',
-  components: { EditItemsForExpericence, ExperienceBox },
+  components: {
+    EditItemsForExpericence,
+    ExperienceBox,
+    Toast,
+    ExperienceBoxEdit,
+  },
   setup() {
     const store = useStore()
     let expData = []
+    const title = 'Aviso'
+    const body = computed(() => store.getters.getErrorMsg)
+    const bodyOk = computed(() => store.getters.getAciertoMsg)
     const admin = localStorage.getItem('admin')
     onBeforeMount(() => {
       if (
@@ -55,6 +70,9 @@ export default {
       expData,
       expValuesComputed,
       admin,
+      body,
+      bodyOk,
+      title,
     }
   },
 }

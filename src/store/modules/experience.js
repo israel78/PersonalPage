@@ -5,7 +5,7 @@ axios.defaults.headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
 }
-axios.defaults.baseURL = 'https://captchaback.herokuapp.com/api/home/app'
+//axios.defaults.baseURL = 'https://captchaback.herokuapp.com'
 axios.defaults.baseURL = 'http://localhost:8084'
 export const state = {
   experiences: [],
@@ -43,6 +43,9 @@ export const actions = {
       commit('setExperienceItemsSend', val)
     })
     console.log(state.experieceItemsSend)
+  },
+  setExperienceItemsToZeroAction: function ({ commit }) {
+    commit('setExperienceItemsToZero', [])
   },
   setExperienceItemsSendToZeroAction({ commit }) {
     commit('setExperienceItemsSendToZero', [])

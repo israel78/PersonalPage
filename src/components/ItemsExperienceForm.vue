@@ -1,6 +1,7 @@
 <template>
-  <b> - {{ titleHeader }}</b>
+  <b>{{ titleHeader }}</b>
   <Multiselect
+    beforeList
     v-model="value"
     mode="tags"
     :searchable="true"
@@ -15,13 +16,15 @@ import { useStore } from 'vuex'
 export default {
   components: { Multiselect },
   name: 'ItemsExperienceForm',
+  emits: ['change'],
   props: {
     title: String,
     titleHeader: String,
     optionsList: Object,
     valuesDefault: Object,
   },
-  setup(props) {
+  setup(props, { emit }) {
+    emit('change', props.valuesDefault)
     let key = 1
     const store = useStore()
     let newValues = []
@@ -45,6 +48,7 @@ export default {
           optionsListToSendUpdated.push(element)
         })
         store.dispatch('refreshListItemsValue', optionsListToSendUpdated)
+        emit('change', optionsListToSendUpdated)
         function filterForUpdate(e) {
           return vals.filter((item) => item === e.value).length > 0
         }
