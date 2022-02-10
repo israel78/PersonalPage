@@ -9,8 +9,11 @@ axios.defaults.headers = {
 axios.defaults.baseURL = 'http://localhost:8084'
 export const state = {
   experiences: [],
-  experieceItems: [],
-  experieceItemsSend: [],
+  experienceItems: [],
+  skillItems: [],
+  devItems: [],
+  jobFuncItems: [],
+  experienceItemsSend: [],
 }
 export const mutations = {
   setExperiences(state, experiences) {
@@ -19,6 +22,21 @@ export const mutations = {
   setExperiencesItems(state, experienceItem) {
     experienceItem.forEach(function (experienceItem) {
       state.experieceItems.push(experienceItem)
+    })
+  },
+  setExperiencesSkillsItems(state, experienceItem) {
+    experienceItem.forEach(function (experienceItem) {
+      state.skillItems.push(experienceItem)
+    })
+  },
+  setExperiencesDevItems(state, experienceItem) {
+    experienceItem.forEach(function (experienceItem) {
+      state.devItems.push(experienceItem)
+    })
+  },
+  setExperiencesFuncItems(state, experienceItem) {
+    experienceItem.forEach(function (experienceItem) {
+      state.jobFuncItems.push(experienceItem)
     })
   },
   setExperienceItemsSend(state, experiencesItem) {
@@ -30,8 +48,32 @@ export const mutations = {
   setExperienceItemsToZero(state, val) {
     state.experieceItems = val
   },
+  setExperienceSkillItemsToZero(state, val) {
+    state.skillItems = val
+  },
+  setExperienceDevItemsToZero(state, val) {
+    state.devItems = val
+  },
+  setExperienceFuncItemsToZero(state, val) {
+    state.jobFuncItems = val
+  },
+  setExperienceEdit(state, val) {
+    let valueFiltered = state.experieceItems.filter(function (value) {
+      return val.id !== value.id
+    })
+    valueFiltered.push(val)
+    valueFiltered.forEach(function (experienceItem) {
+      state.experieceItems.push(experienceItem)
+    })
+    valueFiltered.sort(function (a, b) {
+      return a.starDate - b.starDate
+    })
+  },
 }
 export const actions = {
+  processEditExpForm({ commit }, values) {
+    commit('setExperienceEdit', values)
+  },
   refreshListItemsValue({ commit }, values) {
     commit('setExperienceItemsSendToZero', [])
     console.log(values)
@@ -65,12 +107,23 @@ export const actions = {
       .get('/api/experience/app/getexperienceitmes?type=' + type)
       .then((response) => {
         commit('setExperiencesItems', response.data)
-        //return await response.data
+        if (type === 'skillsItems') {
+          commit('setExperienceSkillItemsToZero', [])
+          commit('setExperiencesSkillsItems', response.data)
+        }
+        if (type === 'devToolsItems') {
+          commit('setExperienceDevItemsToZero', [])
+          commit('setExperiencesDevItems', response.data)
+        }
+        if (type === 'functionsItems') {
+          commit('setExperienceFuncItemsToZero', [])
+          commit('setExperiencesFuncItems', response.data)
+        }
       })
       .catch((error) => console.log(error))
     console.log('experiences')
   },
-  processListItems({ commit }, type) {
+  processListItems({ commit, dispatch }, type) {
     console.log('entro')
     console.log(state.experieceItemsSend)
     let cont2 = 0
@@ -94,6 +147,7 @@ export const actions = {
     axios
       .post('/api/experience/app/setexperieneitems?userid=1', data)
       .then((response) => {
+        dispatch('getExperienceItemsCall', type)
         commit('setAciertoMsg', response.data.value)
         commit('setErrorMsg', '')
       })
@@ -110,9 +164,20 @@ export const actions = {
 }
 export const getters = {
   getExperiences: (state) => {
-    return state.experiences
+    return state.experiences.sort(function (a, b) {
+      return a.starDate - b.starDate
+    })
   },
   getExperienceItems: (state) => {
     return state.experieceItems
+  },
+  getExperienceSkillItems: (state) => {
+    return state.skillItems
+  },
+  getExperienceDevItems: (state) => {
+    return state.devItems
+  },
+  getExperienceFuncItems: (state) => {
+    return state.jobFuncItems
   },
 }

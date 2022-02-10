@@ -109,7 +109,7 @@
               class="mt-3"
               color="dark"
               size="sm"
-              @click="processItemsExpMultiselect()"
+              @click="processExpForm()"
               >Editar experiencia</CButton
             >
           </CRow>
@@ -129,9 +129,13 @@ import Multiselect from '@vueform/multiselect'
 export default {
   props: {
     experience: Object,
+    skillItems: [],
+    devItems: [],
+    jobFunctionItems: [],
   },
   components: { Datepicker, Multiselect },
   setup(props) {
+    const processExpForm = function () {}
     let dateFrom = {
       month: new Date(props.experience.startDate).getMonth() + 1,
       year: new Date(props.experience.startDate).getFullYear(),
@@ -164,13 +168,14 @@ export default {
     const functionsComputed = computed({
       get() {
         let jobsfuntionsReturn = []
-        props.experience.jobFunctionItems.forEach((item) => {
-          let itemOut = {}
-          itemOut.id = item.id
-          itemOut.value = item.name
-          itemOut.label = item.name
-          jobsfuntionsReturn.push(itemOut)
-        })
+        if (props.jobFunctionItems != null)
+          props.jobFunctionItems.forEach((item) => {
+            let itemOut = {}
+            itemOut.id = item.id
+            itemOut.value = item.name
+            itemOut.label = item.name
+            jobsfuntionsReturn.push(itemOut)
+          })
         return jobsfuntionsReturn
       },
     })
@@ -184,13 +189,14 @@ export default {
     const experienceComputed = computed({
       get() {
         let skillsReturn = []
-        props.experience.skillItems.forEach((item) => {
-          let itemOut = {}
-          itemOut.id = item.id
-          itemOut.value = item.name
-          itemOut.label = item.name
-          skillsReturn.push(itemOut)
-        })
+        if (props.skillItems != null)
+          props.skillItems.forEach((item) => {
+            let itemOut = {}
+            itemOut.id = item.id
+            itemOut.value = item.name
+            itemOut.label = item.name
+            skillsReturn.push(itemOut)
+          })
         return skillsReturn
       },
     })
@@ -204,13 +210,14 @@ export default {
     const devComputed = computed({
       get() {
         let devReturn = []
-        props.experience.devToolItems.forEach((item) => {
-          let itemOut = {}
-          itemOut.id = item.id
-          itemOut.value = item.name
-          itemOut.label = item.name
-          devReturn.push(itemOut)
-        })
+        if (props.devItems != null)
+          props.devItems.forEach((item) => {
+            let itemOut = {}
+            itemOut.id = item.id
+            itemOut.value = item.name
+            itemOut.label = item.name
+            devReturn.push(itemOut)
+          })
         return devReturn
       },
     })
@@ -227,6 +234,7 @@ export default {
       valuesDevTools,
       valuesSkills,
       valuesFunctions,
+      processExpForm,
     }
   },
 }

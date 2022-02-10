@@ -24,7 +24,12 @@
   >
     <CCol v-for="item in expValuesComputed" :key="item.id">
       <!-- una caja por experiencia-->
-      <ExperienceBoxEdit :experience="item" />
+      <ExperienceBoxEdit
+        :experience="item"
+        :skillItems="skillsItemsComputed"
+        :devItems="devItemsComputed"
+        :jobFunctionItems="funcItemsComputed"
+      />
     </CCol>
   </CRow>
 </template>
@@ -58,10 +63,31 @@ export default {
         store.getters.getExperiences.length == 0
       )
         store.dispatch('getExperiencesData')
+      //Se rellenan los formularios de valores de las experiencias para modo edicion
+      if (admin != null) {
+        store.dispatch('getExperienceItemsCall', 'devToolsItems')
+        store.dispatch('getExperienceItemsCall', 'functionsItems')
+        store.dispatch('getExperienceItemsCall', 'skillsItems')
+      }
     })
     const expValuesComputed = computed({
       get() {
         return store.getters.getExperiences
+      },
+    })
+    const skillsItemsComputed = computed({
+      get() {
+        return store.getters.getExperienceSkillItems
+      },
+    })
+    const funcItemsComputed = computed({
+      get() {
+        return store.getters.getExperienceFuncItems
+      },
+    })
+    const devItemsComputed = computed({
+      get() {
+        return store.getters.getExperienceDevItems
       },
     })
     return {
@@ -73,6 +99,9 @@ export default {
       body,
       bodyOk,
       title,
+      skillsItemsComputed,
+      funcItemsComputed,
+      devItemsComputed,
     }
   },
 }
